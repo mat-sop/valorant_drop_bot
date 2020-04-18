@@ -1,7 +1,9 @@
 import random
+import sys
 import time
 from datetime import datetime, timedelta
 from getpass import getpass
+from signal import SIGINT, signal
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -61,6 +63,14 @@ def get_valorant_category_link(driver):
         "//*[@data-a-target='stream-game-link']")
 
 
+def sigint_handler(signum, frame):
+    driver.quit()
+    sys.exit(0)
+
+
+signal(SIGINT, sigint_handler)
+
+
 username = input('Username: ')
 password = getpass('Password: ')
 
@@ -79,12 +89,12 @@ while True:
     ActionChains(driver).move_to_element(channel).perform()
     channel.click()
     log_current_url(driver)
+
     watching_time = get_watching_time()
     approx_time = datetime.now() + timedelta(seconds=watching_time)
     print(
         f'Approximate time to end watching {driver.current_url} : \t {approx_time.time()}')
     time.sleep(watching_time)
+    
     category_link = get_valorant_category_link(driver)
     category_link.click()
-
-driver.quit()
