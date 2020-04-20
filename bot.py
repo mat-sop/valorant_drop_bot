@@ -49,7 +49,7 @@ def get_random_valorant_channel(driver):
     channels = WebDriverWait(driver, 10).until(
         lambda x: x.find_elements_by_xpath(
             "//a[@data-a-target='preview-card-title-link']")
-    )
+    )[:10]
     random.shuffle(channels)
     return channels[0]
 
@@ -80,7 +80,6 @@ chrome_options.add_argument('--mute-audio')
 driver = webdriver.Chrome(options=chrome_options)
 
 driver.get('https://www.twitch.tv/directory/game/VALORANT')
-log_current_url(driver)
 log_in(driver, username, password)
 time.sleep(5)  # reload of page after login
 
@@ -95,6 +94,6 @@ while True:
     print(
         f'Approximate time to end watching {driver.current_url} : \t {approx_time.time()}')
     time.sleep(watching_time)
-    
+
     category_link = get_valorant_category_link(driver)
     category_link.click()
