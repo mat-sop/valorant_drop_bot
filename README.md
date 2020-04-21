@@ -25,6 +25,11 @@ python bot.py
 ```
 
 
+## Result
+I have been using only this script to watch valorant, and got my drop after approximately 24-48h uptime.
+![Drop](result.png)
+
+
 ## TODO
 1. More info should be passed as argument than hardcoded, like max/min time to watch, etc.
 2. Hosting other streamers and ending of stream should be handled.
